@@ -1,11 +1,28 @@
 #!/usr/bin/env bash
 
-NO=" No."
-SI=" Sí."
+lang=${LANG%%_*}
+lang=${lang,,}
 
-A=" Apagar"
-R=" Reiniciar"
-C=" Cancelar"
+case "$lang" in
+	es)
+		NO=" No, cancelar acción"
+		SI=" Sí, ave a Leviathan"
+		A=" Apagar"
+		R=" Reiniciar"
+		C=" Cancelar"
+		Q_1="¿Qué desea realizar?"
+	;;
+	*)
+		NO=" No, cancel action"
+		SI=" Yeah, good bye"
+		A=" Power off"
+		R=" Reboot"
+		C=" Cancel"
+		Q_1="¿What to do?"
+	;;
+esac
+
+
 
 seguro() {
 	local M="$1"
@@ -23,7 +40,7 @@ menu() {
 		"$R" \
 		"$C" |
 		rofi -dmenu \
-		-p "¿Qué desea realizar?" \
+		-p "$Q_1" \
 		-i \
 		-theme-str 'window{width: 350px; height: 160px;}'
 }
@@ -31,13 +48,13 @@ menu() {
 while true; do
 case "$(menu)" in
 	"$A")
-	if [ "$(seguro '¿Apagar?')" = "$SI" ]
+	if [ "$(seguro $A)" = "$SI" ]
 	then
 		systemctl poweroff
 	fi
 	;;
 	"$R")
-	if [ "$(seguro '¿Reiniciar?')" = "$SI" ]
+	if [ "$(seguro $R)" = "$SI" ]
 	then
 		systemctl reboot
 	fi
