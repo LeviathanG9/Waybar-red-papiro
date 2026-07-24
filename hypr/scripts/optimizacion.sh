@@ -17,7 +17,7 @@ case "$lang" in
 		Con="Pulsa Enter para continuar..."
 		Q_1="¿Qué desea hacer?"
 		;;
-	en)
+	*)
 		A="󰣇 System update"
 		LC="󱝥 Free Cache memory"
 		LP="󱝧 Free orphan packages"
