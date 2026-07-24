@@ -264,5 +264,8 @@ case "$R" in
 		printf "$IO"
 	fi
 	;;
+	"")
+		exit 0
+	;;
 esac
 done
