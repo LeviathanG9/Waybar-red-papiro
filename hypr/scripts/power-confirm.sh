@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-NO=" No, cancelar acción"
-SI=" Sí, ave a Leviathan"
+NO=" No."
+SI=" Sí."
 
 A=" Apagar"
 R=" Reiniciar"
@@ -31,13 +31,13 @@ menu() {
 while true; do
 case "$(menu)" in
 	"$A")
-	if [ "$(seguro '¿Ha llegado el final?')" = "$SI" ]
+	if [ "$(seguro '¿Apagar?')" = "$SI" ]
 	then
 		systemctl poweroff
 	fi
 	;;
 	"$R")
-	if [ "$(seguro 'Volveremos a levantarnos')" = "$SI" ]
+	if [ "$(seguro '¿Reiniciar?')" = "$SI" ]
 	then
 		systemctl reboot
 	fi
