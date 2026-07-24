@@ -2,12 +2,34 @@
 
 echo ' Leviathan'
 
-A="󰣇 Actualizar sistema"
-LC="󱝥 Limpiar caché"
-LP="󱝧 Limpiar paquetes huerfanos"
-B="󱎴 BTOP"
-S="Si"
-N="No"
+lang=${LANG%%_*}
+lang=${lang,,}
+
+case "$lang" in
+	es)
+		A="󰣇 Actualizar sistema"
+		LC="󱝥 Limpiar caché"
+		LP="󱝧 Limpiar paquetes huerfanos"
+		B="󱎴 BTOP"
+		S="Si"
+		N="No"
+		C="󰜺 Cancelar"
+		Con="Pulsa Enter para continuar..."
+		Q_1="¿Qué desea hacer?"
+		;;
+	en)
+		A="󰣇 System update"
+		LC="󱝥 Free Cache memory"
+		LP="󱝧 Free orphan packages"
+		B="󱎴 BTOP"
+		S="Yes"
+		N="No"
+		C="󰜺 Cancel"
+		Con="Press Return to continue..."
+		Q_1="¿What to do?"
+		;;
+esac
+
 upd_c=$(yay -Qu | wc -l)
 
 terminal() {
@@ -16,7 +38,7 @@ terminal() {
     kitty -e bash -c "
         $cmd
         echo
-        read -p 'Pulsa Enter para continuar...'
+        read -p "$Con"
     " &
 
     local pid=$!
@@ -33,9 +55,9 @@ menu() {
 	"$LC ($cache_c)" \
 	"$LP ($paq_c)" \
 	"$B" \
-	"󰜺 Cancelar" |
+	"$C" |
 	rofi -dmenu \
-	-p "¿Qué desea hacer?" \
+	-p "$Q_1" \
 	-i \
 	-theme-str 'window{width: 400px; height: 210px;}'
 }
