@@ -8,6 +8,7 @@ This requiere the following packages:
 - Hyprland
 - Waybar
 - Rofi
+- swaync
 - Kitty
 - NetworkManager
 - nmcli
@@ -19,3 +20,7 @@ This requiere the following packages:
 - pavucontrol
 - wireplumber
 - btop
+
+Optional:
+- Steam
+- Vesktop (it's better for linux than discord and the module works just for this. However you can change it in ~/.config/waybar/config.jsonc)
