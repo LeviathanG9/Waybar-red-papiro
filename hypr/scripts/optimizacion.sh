@@ -2,12 +2,12 @@
 
 echo ' Leviathan'
 
-A="󰣇 Actualizar el Leviathan"
-LC="󱝥 Limpiar cache"
+A="󰣇 Actualizar sistema"
+LC="󱝥 Limpiar caché"
 LP="󱝧 Limpiar paquetes huerfanos"
 B="󱎴 BTOP"
-S="Si, el leviathan resurgirá"
-N="No, mantenerlo despierto"
+S="Si"
+N="No"
 upd_c=$(yay -Qu | wc -l)
 
 terminal() {
@@ -45,7 +45,7 @@ conf() {
 	"$S" \
 	"$N" |
 	rofi -dmenu \
-	-p "¿Quiere reiniciar al Leviathan?" \
+	-p "¿Reiniciar?" \
 	-i \
 	-theme-str 'window{width: 275px; height: 130px;}'
 }
