@@ -5,8 +5,8 @@ lang=${lang,,}
 
 case "$lang" in
 	es)
-		NO=" No"
-		SI=" Sí"
+		NO=" No, cancelar acción"
+		SI=" Sí, adiós"
 		A=" Apagar"
 		R=" Reiniciar"
 		C=" Cancelar"
