@@ -1,17 +1,52 @@
 #!/usr/bin/env bash
 
+lang=${LANG%%_*}
+lang=${lang,,}
+
+case "$lang" in
+	es)
+		C="󰜺 Cancelar"
+		A=" Actualizar redes WiFi"
+		P_1="Rofi no encontrado."
+		P_2="NetworkManager no está instalado."
+		open_red="Abierta"
+		pwdq="Contraseña para: "
+		MA_1=" Activar modo avión"
+		MA_2="󰖪 Desactivar modo avión"
+		n_B="Banda"
+		n_Sig="Señal"
+		n_Seg="Seguridad"
+		title="Configuración WiFi: "
+		IO="Opción no válida"
+	;;
+	*)
+		C="󰜺 Cancel"
+		A=" Update WiFi networks"
+		P_1="Rofi not found."
+		P_2="NetworkManager not instaled."
+		open_red="Open"
+		pwdq="Password for: "
+		MA_1=" Activate plane mode"
+		MA_2="󰖪 Desactivate plane mode"
+		n_B="Bandwith"
+		n_Sig="Strength"
+		n_Seg="Security"
+		title="WiFi Configuration: "
+		IO="Invalid option."
+	;;
+esac
+
 command -v rofi >/dev/null || {
-    echo "Rofi no encontrado."
+    echo "$P_1"
     exit 1
 }
 
 command -v nmcli >/dev/null || {
-    rofi -e "NetworkManager no está instalado."
+    rofi -e "$P_2"
     exit 1
 }
 
-C="󰜺 Cancelar"
-A=" Actualizar redes WiFi"
+
 
 WIFI_DEV() {
 	local type dev
@@ -50,7 +85,7 @@ UPD() {
 		--method org.freedesktop.NetworkManager.Device.Wireless.RequestScan \
 		"{}"
 }
-
+UPD
 DBusProp() {
     gdbus call \
         --system \
@@ -97,7 +132,7 @@ SEC() {
 		return
 	}
 	(( flags == 0 )) && {
-		printf "Abierta"
+		printf "$open_red"
 		return
 	}
 	
@@ -153,7 +188,7 @@ LINK() {
 		return
 	fi
 
-	if [[ "$sec" == "Abierta" ]]; then
+	if [[ "$sec" == "$open_red" ]]; then
 		nmcli dev wifi connect "$ssid"
 		return
 	fi
@@ -163,7 +198,7 @@ LINK() {
 		pass=$(
 			rofi -dmenu \
 				-password \
-				-p "Contraseña para $ssid: "
+				-p "$pwdq $ssid: "
 		)
 	
 		[[ -z "$pass" ]] && return
@@ -178,15 +213,15 @@ LINK() {
 WiFi_menu_p() { {
 	wifi_on=$(nmcli radio wifi)
 	if [[ $wifi_on == enabled ]]; then
-	    MA=" Activar modo avión"
+	    MA="$MA_1"
 	else
-	    MA="󰖪 Desactivar modo avión"
+	    MA="$MA_2"
 	fi
 	printf "%s\n%s\n%s\n%s\n"  \
 	"$A" "$MA" "$C" \
 	"───────────────────────────────"
 		
-    printf "%-5s %-35s %-6s %s %-5s\n" "AP" "SSID" "Banda" "Señal" "Seguridad"
+    printf "%-5s %-35s %-6s %s %-5s\n" "AP" "SSID" "$n_B" "$n_Sig" "$n_Seg"
 	(
 	gdbus call \
 		--system \
@@ -206,7 +241,7 @@ WiFi_menu_p() { {
 			"$str" "$ap_id" "$ssid" "$b" "$str" "$sec"
 		done
 	) | sort -t'|' -k1,1nr | head -30 | cut -d'|' -f2-
-	} | rofi -dmenu -p "Configuración WiFi: " -theme-str 'window {width: 555px; }'
+	} | rofi -dmenu -p "$title" -theme-str 'window {width: 555px; }'
 } 
 
 while true;
@@ -222,12 +257,11 @@ case "$R" in
 	*)
 	ap_id=${R%% *}
 	if [ "$ap_id" == "" ] || [ "$ap_id" == "󰖪" ]; then
-		echo "Modo avión switched"
 		PLEN
 	elif [[ $ap_id =~ ^[0-9]+$ ]]; then
 		LINK "$ap_id"
 	else
-		printf "Opción no válida"
+		printf "$IO"
 	fi
 	;;
 esac
