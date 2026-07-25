@@ -3,21 +3,20 @@ A Waybar for those who wants a waybar + rofi red style.
 I created this Waybar configuration to include integrated Rofi-based menus for others who might want the same thing.
 I am new to Arch Linux—as of July 24, 2026, I have been using it for just one year—though I have been studying it in all my spare time. I hope you like it; improvements and suggestions are welcome.
 
-Supported languages:
-- English
-- Spanish
+## Supported languages
 
-This requiere the following packages:
+- English
+- Español
+
+## Required packages
 
 - Hyprland
 - Waybar
 - Rofi
-- swaync
+- Sway Notification Center (swaync)
 - Kitty
-- NetworkManager
-- nmcli
-- gdbus (glib2)
-- Nerd Fonts
+- NetworkManager (includes `nmcli`)
+- GLib2 (includes `gdbus`)
 - wl-clipboard
 - brightnessctl
 - playerctl
@@ -25,6 +24,24 @@ This requiere the following packages:
 - wireplumber
 - btop
 
-Optional:
+## Fonts
+
+```bash
+sudo pacman -S --needed \
+    ttf-jetbrains-mono-nerd \
+    noto-fonts-cjk
+```
+
+## Optional
+
 - Steam
-- Vesktop (it's better for linux than discord and the module works just for this. However you can change it in ~/.config/waybar/config.jsonc)
+- Vesktop (recommended instead of Discord. The default module is configured for Vesktop, but you can easily modify `~/.config/waybar/config.jsonc`.)
+
+## Installation
+
+```bash
+git clone https://github.com/LeviathanG9/Waybar-red-papiro.git
+cd Waybar-red-papiro
+chmod +x install.sh
+./install.sh
+```
