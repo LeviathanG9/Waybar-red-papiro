@@ -48,13 +48,13 @@ menu() {
 while true; do
 case "$(menu)" in
 	"$A")
-	if [ "$(seguro $A)" = "$SI" ]
+	if [ "$(seguro "$A")" = "$SI" ]
 	then
 		systemctl poweroff
 	fi
 	;;
 	"$R")
-	if [ "$(seguro $R)" = "$SI" ]
+	if [ "$(seguro "$R")" = "$SI" ]
 	then
 		systemctl reboot
 	fi
